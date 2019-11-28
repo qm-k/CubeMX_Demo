@@ -1,0 +1,17 @@
+cube_demo_ldtc\applicationfontprovider.o: ../touchgfx/generated/fonts/src/applicationfontprovider.cpp
+cube_demo_ldtc\applicationfontprovider.o: ../TouchGFX/generated/fonts/include/fonts/ApplicationFontProvider.hpp
+cube_demo_ldtc\applicationfontprovider.o: ../middlewares/st/touchgfx/touchgfx/framework/include/touchgfx/FontManager.hpp
+cube_demo_ldtc\applicationfontprovider.o: ../middlewares/st/touchgfx/touchgfx/framework/include/touchgfx/Font.hpp
+cube_demo_ldtc\applicationfontprovider.o: ../middlewares/st/touchgfx/touchgfx/framework/include/touchgfx/hal/Types.hpp
+cube_demo_ldtc\applicationfontprovider.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+cube_demo_ldtc\applicationfontprovider.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\assert.h
+cube_demo_ldtc\applicationfontprovider.o: ../middlewares/st/touchgfx/touchgfx/framework/include/touchgfx/hal/Config.hpp
+cube_demo_ldtc\applicationfontprovider.o: ../middlewares/st/touchgfx/touchgfx/framework/include/touchgfx/Unicode.hpp
+cube_demo_ldtc\applicationfontprovider.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h
+cube_demo_ldtc\applicationfontprovider.o: ../TouchGFX/generated/fonts/include/fonts/GeneratedFont.hpp
+cube_demo_ldtc\applicationfontprovider.o: ../middlewares/st/touchgfx/touchgfx/framework/include/touchgfx/ConstFont.hpp
+cube_demo_ldtc\applicationfontprovider.o: ../TouchGFX/generated/texts/include/texts/TypedTextDatabase.hpp
+cube_demo_ldtc\applicationfontprovider.o: ../middlewares/st/touchgfx/touchgfx/framework/include/touchgfx/TypedText.hpp
+cube_demo_ldtc\applicationfontprovider.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\cassert
+cube_demo_ldtc\applicationfontprovider.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\assert.h
+cube_demo_ldtc\applicationfontprovider.o: ../middlewares/st/touchgfx/touchgfx/framework/include/touchgfx/Texts.hpp

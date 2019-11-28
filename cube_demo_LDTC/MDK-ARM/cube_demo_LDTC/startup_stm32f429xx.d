@@ -1,0 +1,1 @@
+cube_demo_ldtc\startup_stm32f429xx.o: startup_stm32f429xx.s
