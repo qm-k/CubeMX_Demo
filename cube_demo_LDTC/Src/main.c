@@ -63,7 +63,7 @@ void SystemClock_Config(void);
 uint32_t aTxBuffer[BUFFER_SIZE];
 uint32_t aRxBuffer[BUFFER_SIZE];
 uint32_t buffer[300];
-__IO uint32_t uwWriteReadStatus = 0;
+__IO uint32_t checkWriteReadStatus = 0;
 int i;
 /* USER CODE END PFP */
 
@@ -107,68 +107,62 @@ int main(void)
   MX_DMA2D_Init();
   MX_LTDC_Init();
   /* USER CODE BEGIN 2 */
-	printf("\r\n LDTC DMA2D example !!!\r\n");
-	/* Program the SDRAM external device */
-	BSP_SDRAM_Initialization_sequence(REFRESH_COUNT);
-    /*##-2- SDRAM memory read/write access #####################################*/
-    /* Fill the buffer to write */
-    for(i=0; i<BUFFER_SIZE; i++)
-    {
-            aTxBuffer[i]=0x00000000+i;     /* TxBuffer init */
-    }
-   
-    /* Write data to the SDRAM memory */
-    BSP_SDRAM_WriteData(SDRAM_DEVICE_ADDR+WRITE_READ_ADDR,aTxBuffer, BUFFER_SIZE);
-    printf("\r\n/* Write data to the SDRAM memory */\r\n\r\n");
-    for(i=0;i< BUFFER_SIZE;i++)
-    {
-            printf("%02X:0x%08X ",i,aTxBuffer[i]);
-    }
-    printf("\r\n");
-   
-    /* Read back data from the SDRAM memory */
-    BSP_SDRAM_ReadData(SDRAM_DEVICE_ADDR+WRITE_READ_ADDR, aRxBuffer, BUFFER_SIZE);
-    printf("\r\n/* Read back data from the SDRAM memory */\r\n\r\n");
-    for(i=0;i< BUFFER_SIZE;i++)
-    {
-          printf("%02X:0x%08X ",i,aRxBuffer[i]);
-    }
-    printf("\r\n");
-   
-    /*##-3- Checking data integrity ############################################*/   
-    for (i = 0; (i < BUFFER_SIZE); i++)
-    {
-            if (aRxBuffer[i] != aTxBuffer[i])
-                    uwWriteReadStatus++;
-    }  
-    if(uwWriteReadStatus == 0 ) /* check date */
-            printf("\r\n SDRAM Test OK\r\n");
-    else
-            printf("\r\n SDRAM Test False\r\n");
+  printf("\r\n LDTC DMA2D example !!!\r\n");
+  /* SDRAM device configuration */
+  BSP_SDRAM_Initialization_sequence(REFRESH_COUNT);
 
-		HAL_GPIO_WritePin(GPIOD, GPIO_PIN_7, GPIO_PIN_SET);
-		printf("Backlight = %d !!!",HAL_GPIO_ReadPin(GPIOD,GPIO_PIN_7));
-	/*##-1- Configure the SDRAM device #########################################*/
-	/* SDRAM device configuration */
-	//BSP_SDRAM_Init();
-	/*##-2- Start DMA2D transfer ###############################################*/ 
-	if(HAL_DMA2D_Start_IT(&hdma2d, (uint32_t)_acDJI_0002, (uint32_t)0xD0000000, 800, 480) != HAL_OK)  //(uint32_t)SDRAM_DEVICE_ADDR
-	{
-	} 
-	HAL_Delay(500);
+  /* 1- SDRAM memory read/write access test  */
+  /* Fill the buffer to write */
+  for (i = 0; i < BUFFER_SIZE; i++)
+  {
+    aTxBuffer[i] = 0x00000000 + i; /* TxBuffer init */
+  }
 
-		/* Read back data from the SDRAM memory */
-	BSP_SDRAM_ReadData(SDRAM_DEVICE_ADDR, buffer, 300);
-	printf("\r\n/* Read back data from the SDRAM memory */\r\n\r\n");
-	for(i=0;i< BUFFER_SIZE;i++)
-	{
-				printf("%02X:0x%08X ",i,buffer[i]);
-	}
-	printf("\r\n");
-//	printf("\r\n");
-//	if(HAL_DMA2D_Start_IT(&hdma2d, (uint32_t)image2, (uint32_t)0xD0100000, 512, 300) != HAL_OK)  //(uint32_t)SDRAM_DEVICE_ADDR
-//	{
-//	} 
+  /* Write data to the SDRAM memory */
+  BSP_SDRAM_WriteData(SDRAM_DEVICE_ADDR + WRITE_READ_ADDR, aTxBuffer, BUFFER_SIZE);
+  printf("\r\n/* Write data to the SDRAM memory */\r\n\r\n");
+  for (i = 0; i < BUFFER_SIZE; i++)
+  {
+    printf("%02X:0x%08X ", i, aTxBuffer[i]);
+  }
+  printf("\r\n");
+
+  /* Read back data from the SDRAM memory */
+  BSP_SDRAM_ReadData(SDRAM_DEVICE_ADDR + WRITE_READ_ADDR, aRxBuffer, BUFFER_SIZE);
+  printf("\r\n/* Read back data from the SDRAM memory */\r\n\r\n");
+  for (i = 0; i < BUFFER_SIZE; i++)
+  {
+    printf("%02X:0x%08X ", i, aRxBuffer[i]);
+  }
+  printf("\r\n");
+
+  /* 2- Checking data integrity */
+  for (i = 0; (i < BUFFER_SIZE); i++)
+  {
+    if (aRxBuffer[i] != aTxBuffer[i])
+      checkWriteReadStatus++;
+  }
+  if (checkWriteReadStatus == 0) /* check date */
+    printf("\r\n SDRAM Test OK\r\n");
+  else
+    printf("\r\n SDRAM Test False\r\n");
+
+  HAL_GPIO_WritePin(GPIOD, GPIO_PIN_7, GPIO_PIN_SET);//lighting the back light
+  printf("Backlight = %d !!!", HAL_GPIO_ReadPin(GPIOD, GPIO_PIN_7));
+  /* 3- Start DMA2D transfer */
+  if(HAL_DMA2D_Start_IT(&hdma2d, (uint32_t)_acDJI_0002, (uint32_t)0xD0000000, 800, 480) != HAL_OK)  //(uint32_t)SDRAM_DEVICE_ADDR
+  {
+  } 
+  HAL_Delay(500);
+
+  /* Read back data from the SDRAM memory */
+  BSP_SDRAM_ReadData(SDRAM_DEVICE_ADDR, buffer, 300);
+  printf("\r\n/* Read back data from the SDRAM memory */\r\n\r\n");
+  for(i=0;i< BUFFER_SIZE;i++)
+  {
+        printf("%02X:0x%08X ",i,buffer[i]);
+  }
+  printf("\r\n");
   /* USER CODE END 2 */
 
   /* Infinite loop */

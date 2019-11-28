@@ -59,9 +59,9 @@ void SystemClock_Config(void);
 uint32_t aTxBuffer[BUFFER_SIZE];
 uint32_t aRxBuffer[BUFFER_SIZE];
 /* Status variables */
-__IO uint32_t uwWriteReadStatus = 0;
+__IO uint32_t checkWriteReadStatus = 0;
 int i;
-unsigned char date[]="asd";
+unsigned char date[]="test sdram!!!";
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -101,43 +101,43 @@ int main(void)
   MX_FMC_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
-	HAL_UART_Transmit(&huart1,date,0x03,0xffff);
-	BSP_SDRAM_Initialization_sequence(REFRESH_COUNT);
-    /*##-2- SDRAM memory read/write access #####################################*/
-    /* Fill the buffer to write */
-    for(i=0; i<BUFFER_SIZE; i++)
-    {
-            aTxBuffer[i]=0x00000000+i;     /* TxBuffer init */
-    }
-   
-    /* Write data to the SDRAM memory */
-    BSP_SDRAM_WriteData(SDRAM_DEVICE_ADDR+WRITE_READ_ADDR,aTxBuffer, BUFFER_SIZE);
-    printf("\r\n/* Write data to the SDRAM memory */\r\n\r\n");
-    for(i=0;i< BUFFER_SIZE;i++)
-    {
-            printf("%02X:0x%08X ",i,aTxBuffer[i]);
-    }
-    printf("\r\n");
-   
-    /* Read back data from the SDRAM memory */
-    BSP_SDRAM_ReadData(SDRAM_DEVICE_ADDR+WRITE_READ_ADDR, aRxBuffer, BUFFER_SIZE-1);
-    printf("\r\n/* Read back data from the SDRAM memory */\r\n\r\n");
-    for(i=0;i< BUFFER_SIZE;i++)
-    {
-          printf("%02X:0x%08X ",i,aRxBuffer[i]);
-    }
-    printf("\r\n");
-   
-    /*##-3- Checking data integrity ############################################*/   
-    for (i = 0; (i < BUFFER_SIZE); i++)
-    {
-            if (aRxBuffer[i] != aTxBuffer[i])
-                    uwWriteReadStatus++;
-    }  
-    if(uwWriteReadStatus == 0 ) /* check date */
-            printf("\r\n SDRAM Test OK\r\n");
-    else
-            printf("\r\n SDRAM Test False\r\n");
+  HAL_UART_Transmit(&huart1, date, 0x0D, 0xffff);
+  BSP_SDRAM_Initialization_sequence(REFRESH_COUNT);
+  /* 1- SDRAM memory read/write access */
+  /* Fill the buffer to write */
+  for (i = 0; i < BUFFER_SIZE; i++)
+  {
+    aTxBuffer[i] = 0x00000000 + i; /* TxBuffer init */
+  }
+
+  /* Write data to the SDRAM memory */
+  BSP_SDRAM_WriteData(SDRAM_DEVICE_ADDR + WRITE_READ_ADDR, aTxBuffer, BUFFER_SIZE);
+  printf("\r\n/* Write data to the SDRAM memory */\r\n\r\n");
+  for (i = 0; i < BUFFER_SIZE; i++)
+  {
+    printf("%02X:0x%08X ", i, aTxBuffer[i]);
+  }
+  printf("\r\n");
+
+  /* Read back data from the SDRAM memory */
+  BSP_SDRAM_ReadData(SDRAM_DEVICE_ADDR + WRITE_READ_ADDR, aRxBuffer, BUFFER_SIZE - 1);
+  printf("\r\n/* Read back data from the SDRAM memory */\r\n\r\n");
+  for (i = 0; i < BUFFER_SIZE; i++)
+  {
+    printf("%02X:0x%08X ", i, aRxBuffer[i]);
+  }
+  printf("\r\n");
+
+  /* 2- Checking data integrity */
+  for (i = 0; (i < BUFFER_SIZE); i++)
+  {
+    if (aRxBuffer[i] != aTxBuffer[i])
+      checkWriteReadStatus++;
+  }
+  if (checkWriteReadStatus == 0) /* check date */
+    printf("\r\n SDRAM Test OK\r\n");
+  else
+    printf("\r\n SDRAM Test False\r\n");
 
   /* USER CODE END 2 */
 

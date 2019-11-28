@@ -71,11 +71,6 @@ void SystemClock_Config(void);
   {
     Error_Handler();
   }
-//    sConfigOC.OCMode = TIM_OCMODE_PWM1;
-//    sConfigOC.Pulse = value;
-//    sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
-//    sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
-//    HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_1);
     HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);  
 }
 
