@@ -6,7 +6,7 @@ cube_demo_freertos\croutine.o: ../Inc/FreeRTOSConfig.h
 cube_demo_freertos\croutine.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
 cube_demo_freertos\croutine.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
 cube_demo_freertos\croutine.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
-cube_demo_freertos\croutine.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM3/portmacro.h
+cube_demo_freertos\croutine.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/portmacro.h
 cube_demo_freertos\croutine.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
 cube_demo_freertos\croutine.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
 cube_demo_freertos\croutine.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h

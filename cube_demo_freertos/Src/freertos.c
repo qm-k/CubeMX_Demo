@@ -46,20 +46,38 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN Variables */
-
+extern osThreadId blink_taskHandle;
 /* USER CODE END Variables */
 osThreadId defaultTaskHandle;
-osThreadId LEDHandle;
+osThreadId talker_taskHandle;
+osThreadId listener_taskHandle;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
-   
+extern void blink(void const * argument);
 /* USER CODE END FunctionPrototypes */
 
 void StartDefaultTask(void const * argument);
-void StartLED1(void const * argument);
+void talker(void const * argument);
+void listener(void const * argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
+
+/* GetIdleTaskMemory prototype (linked to static allocation support) */
+void vApplicationGetIdleTaskMemory( StaticTask_t **ppxIdleTaskTCBBuffer, StackType_t **ppxIdleTaskStackBuffer, uint32_t *pulIdleTaskStackSize );
+
+/* USER CODE BEGIN GET_IDLE_TASK_MEMORY */
+static StaticTask_t xIdleTaskTCBBuffer;
+static StackType_t xIdleStack[configMINIMAL_STACK_SIZE];
+  
+void vApplicationGetIdleTaskMemory( StaticTask_t **ppxIdleTaskTCBBuffer, StackType_t **ppxIdleTaskStackBuffer, uint32_t *pulIdleTaskStackSize )
+{
+  *ppxIdleTaskTCBBuffer = &xIdleTaskTCBBuffer;
+  *ppxIdleTaskStackBuffer = &xIdleStack[0];
+  *pulIdleTaskStackSize = configMINIMAL_STACK_SIZE;
+  /* place for user code */
+}                   
+/* USER CODE END GET_IDLE_TASK_MEMORY */
 
 /**
   * @brief  FreeRTOS initialization
@@ -92,12 +110,18 @@ void MX_FREERTOS_Init(void) {
   osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 128);
   defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
-  /* definition and creation of LED */
-  osThreadDef(LED, StartLED1, osPriorityNormal, 0, 128);
-  LEDHandle = osThreadCreate(osThread(LED), NULL);
+  /* definition and creation of talker_task */
+  osThreadDef(talker_task, talker, osPriorityIdle, 0, 128);
+  talker_taskHandle = osThreadCreate(osThread(talker_task), NULL);
+
+  /* definition and creation of listener_task */
+  osThreadDef(listener_task, listener, osPriorityIdle, 0, 128);
+  listener_taskHandle = osThreadCreate(osThread(listener_task), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
+	osThreadDef(blink_task, blink, osPriorityIdle, 0, 128);
+  blink_taskHandle = osThreadCreate(osThread(blink_task), NULL);
   /* USER CODE END RTOS_THREADS */
 
 }
@@ -114,6 +138,7 @@ void StartDefaultTask(void const * argument)
     
     
     
+    
 
   /* USER CODE BEGIN StartDefaultTask */
   /* Infinite loop */
@@ -124,22 +149,42 @@ void StartDefaultTask(void const * argument)
   /* USER CODE END StartDefaultTask */
 }
 
-/* USER CODE BEGIN Header_StartLED1 */
+/* USER CODE BEGIN Header_talker */
 /**
-* @brief Function implementing the LED thread.
+* @brief Function implementing the talker_task thread.
 * @param argument: Not used
 * @retval None
 */
-/* USER CODE END Header_StartLED1 */
-void StartLED1(void const * argument)
+/* USER CODE END Header_talker */
+void talker(void const * argument)
 {
-  /* USER CODE BEGIN StartLED1 */
+  /* USER CODE BEGIN talker */
   /* Infinite loop */
   for(;;)
   {
-    osDelay(1);
+		printf("talk --\r\n");
+    osDelay(100);
   }
-  /* USER CODE END StartLED1 */
+  /* USER CODE END talker */
+}
+
+/* USER CODE BEGIN Header_listener */
+/**
+* @brief Function implementing the listener_task thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_listener */
+void listener(void const * argument)
+{
+  /* USER CODE BEGIN listener */
+  /* Infinite loop */
+  for(;;)
+  {
+		printf("listener ---\r\n");
+    osDelay(1000);
+  }
+  /* USER CODE END listener */
 }
 
 /* Private application code --------------------------------------------------*/
