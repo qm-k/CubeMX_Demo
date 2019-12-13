@@ -1,9 +1,0 @@
-cube_demo_ldtc\bitmapdatabase.o: ../touchgfx/generated/images/src/bitmapdatabase.cpp
-cube_demo_ldtc\bitmapdatabase.o: ../middlewares/st/touchgfx/touchgfx/framework/include/touchgfx/Bitmap.hpp
-cube_demo_ldtc\bitmapdatabase.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\cassert
-cube_demo_ldtc\bitmapdatabase.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\assert.h
-cube_demo_ldtc\bitmapdatabase.o: ../middlewares/st/touchgfx/touchgfx/framework/include/touchgfx/hal/Types.hpp
-cube_demo_ldtc\bitmapdatabase.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
-cube_demo_ldtc\bitmapdatabase.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\assert.h
-cube_demo_ldtc\bitmapdatabase.o: ../middlewares/st/touchgfx/touchgfx/framework/include/touchgfx/hal/Config.hpp
-cube_demo_ldtc\bitmapdatabase.o: ../TouchGFX/generated/images/include/BitmapDatabase.hpp
