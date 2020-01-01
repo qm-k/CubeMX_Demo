@@ -1,2 +1,0 @@
-touchgfx_demo\blue_progressindicators_fill_medium_circle_indicator_fill_full.o: ../touchgfx/generated/images/src/__designer/blue_progressindicators_fill_medium_circle_indicator_fill_full.cpp
-touchgfx_demo\blue_progressindicators_fill_medium_circle_indicator_fill_full.o: ../middlewares/st/touchgfx/touchgfx/framework/include/touchgfx/hal/Config.hpp

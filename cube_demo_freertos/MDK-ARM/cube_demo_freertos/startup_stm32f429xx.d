@@ -1,1 +1,0 @@
-cube_demo_freertos\startup_stm32f429xx.o: startup_stm32f429xx.s
